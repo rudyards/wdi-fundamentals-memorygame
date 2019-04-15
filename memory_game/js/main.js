@@ -30,12 +30,23 @@ var checkForMatch = function(){
       console.log("Sorry, try again.");
     }
 }
-var cardFlip = function(cardID){
-    console.log("User flipped "+cards[cardID].rank+" of "+cards[cardID.suit]);
-    cardsInPlay.push(cards[cardID].rank);
-    console.log(cards[cardID].cardImage)
+var cardFlip = function(){
+    var cardId = this.getAttribute('data-id')
+    console.log("User flipped "+cards[cardId].rank+" of "+cards[cardId.suit]);
+    cardsInPlay.push(cards[cardId].rank);
+    console.log(cards[cardId].cardImage);
+    this.setAttribute('src', cards[cardId].cardImage)
     checkForMatch();
 }
 
-cardFlip(0);
-cardFlip(2);
+var createBoard = function(){
+    for (var i = 0; i < cards.length; i++){
+        var cardElement = document.createElement('img');
+        cardElement.setAttribute('src', "images/back.png");
+        cardElement.setAttribute('data-id', i);
+        cardElement.addEventListener('click', cardFlip());
+        console.log("Card "+i+" done.");
+        document.getElementById('game-board').appendChild(cardElement);
+    }
+}
+createBoard();
